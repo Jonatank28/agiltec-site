@@ -1,113 +1,59 @@
+---
+// src/layouts/Layout.astro
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { 
+	title = 'AgilTéc - Caronas Urbanas Inteligentes | Economize no Dia a Dia',
+	description = 'Compartilhe caronas urbanas com segurança. Economize no trajeto para trabalho, faculdade e compromissos diários.'
+} = Astro.props;
+---
+
 <!doctype html>
 <html lang="pt-BR">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		
-		<!-- SEO Básico -->
-		<title>AgilTéc - Caronas Urbanas Inteligentes | Economize no Dia a Dia</title>
-		<meta name="description" content="Compartilhe caronas urbanas com segurança. Economize no trajeto para trabalho, faculdade e compromissos diários. Reduza custos, evite trânsito e ajude o meio ambiente." />
-		<meta name="keywords" content="caronas urbanas, carona trabalho, carona faculdade, mobilidade urbana, transporte compartilhado, economia combustível, carona diária, app de carona, transporte colaborativo, carona segura" />
-		<meta name="author" content="AgilTéc" />
-		<meta name="robots" content="index, follow" />
+		<!-- SEO -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
 		<meta name="theme-color" content="#2563eb" />
-		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://agiltec.com.br/" />
-		<meta property="og:title" content="AgilTéc - Caronas Urbanas Inteligentes" />
-		<meta property="og:description" content="Compartilhe caronas urbanas com segurança. Economize no trajeto para trabalho, faculdade e compromissos diários." />
-		<meta property="og:image" content="https://agiltec.com.br/og-image.jpg" />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta property="og:locale" content="pt_BR" />
-		<meta property="og:site_name" content="AgilTéc" />
-		
-		<!-- Twitter Card -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:url" content="https://agiltec.com.br/" />
-		<meta name="twitter:title" content="AgilTéc - Caronas Urbanas Inteligentes" />
-		<meta name="twitter:description" content="Compartilhe caronas urbanas com segurança. Economize no dia a dia." />
-		<meta name="twitter:image" content="https://agiltec.com.br/twitter-image.jpg" />
-		
-		<!-- Canonical URL -->
-		<link rel="canonical" href="https://agiltec.com.br/" />
-		
-		<!-- Favicons -->
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<link rel="manifest" href="/site.webmanifest" />
-		
-		<!-- Schema.org Structured Data -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "MobileApplication",
-			"name": "AgilTéc",
-			"description": "App de caronas urbanas para trabalho, faculdade e compromissos diários. Compartilhe caronas com segurança e economize.",
-			"applicationCategory": "TransportApplication",
-			"operatingSystem": ["Android", "iOS"],
-			"offers": {
-				"@type": "Offer",
-				"price": "0",
-				"priceCurrency": "BRL"
-			},
-			"aggregateRating": {
-				"@type": "AggregateRating",
-				"ratingValue": "4.9",
-				"ratingCount": "15000",
-				"bestRating": "5",
-				"worstRating": "1"
-			},
-			"author": {
-				"@type": "Organization",
-				"name": "AgilTéc",
-				"url": "https://agiltec.com.br"
-			}
-		}
-		</script>
-		
-		<!-- Local Business Schema (se tiver endereço físico) -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "LocalBusiness",
-			"name": "AgilTéc",
-			"description": "Plataforma de caronas urbanas",
-			"url": "https://agiltec.com.br",
-			"telephone": "+55-11-99999-9999",
-			"address": {
-				"@type": "PostalAddress",
-				"addressLocality": "São Paulo",
-				"addressRegion": "SP",
-				"addressCountry": "BR"
-			}
-		}
-		</script>
-		
-		<!-- Google Analytics (adicione seu ID) -->
-		<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-			gtag('config', 'G-XXXXXXXXXX');
-		</script> -->
 	</head>
-	<body>
+	<body class="bg-white antialiased">
 		<slot />
 	</body>
 </html>
 
 <style is:global>
-	html,
-	body {
+	* {
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	html {
 		scroll-behavior: smooth;
+		overscroll-behavior-y: none;
+		-webkit-overflow-scrolling: touch;
+	}
+	
+	body {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		overscroll-behavior-y: none;
+		min-height: 100vh;
+		background-color: #111827; /* Cor do footer para evitar branco */
+	}
+	
+	/* Fix específico para iOS - prevenir espaço branco */
+	@supports (-webkit-touch-callout: none) {
+		body {
+			overscroll-behavior: none;
+			-webkit-overflow-scrolling: touch;
+		}
 	}
 </style>
