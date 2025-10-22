@@ -1,5 +1,7 @@
 ---
 // src/layouts/Layout.astro
+import { ViewTransitions } from 'astro:transitions';
+
 interface Props {
 	title?: string;
 	description?: string;
@@ -23,6 +25,18 @@ const {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="theme-color" content="#2563eb" />
+		
+		<!-- View Transitions - Elimina o flash -->
+		<ViewTransitions />
+		
+		<!-- Prevenir FOUC -->
+		<style is:inline>
+			/* Mostra conteúdo apenas quando carregado */
+			html {
+				visibility: visible;
+				opacity: 1;
+			}
+		</style>
 	</head>
 	<body class="bg-white antialiased">
 		<slot />
@@ -46,14 +60,27 @@ const {
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 		overscroll-behavior-y: none;
 		min-height: 100vh;
-		background-color: #111827; /* Cor do footer para evitar branco */
+		background-color: #ffffff;
 	}
 	
-	/* Fix específico para iOS - prevenir espaço branco */
+	/* Prevenir flash branco */
+	html, body {
+		background-color: #ffffff;
+	}
+	
+	/* Fix específico para iOS */
 	@supports (-webkit-touch-callout: none) {
 		body {
 			overscroll-behavior: none;
 			-webkit-overflow-scrolling: touch;
+		}
+	}
+	
+	/* Transições suaves entre páginas */
+	@media (prefers-reduced-motion: no-preference) {
+		::view-transition-old(root),
+		::view-transition-new(root) {
+			animation-duration: 0.2s;
 		}
 	}
 </style>

@@ -9,5 +9,11 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 4321
-  }
+  },
+  // Configurações de build para melhor performance
+  build: {
+    inlineStylesheets: 'auto',
+  },
+  // View Transitions já está nativo, não precisa de experimental!
+  // Só use ViewTransitions no Layout.astro
 });
